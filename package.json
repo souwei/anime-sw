@@ -10,9 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ejs-mate": "^2.3.0",
     "express": "^4.15.2",
     "pg-promise": "^5.6.7",
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "xml2js": "^0.4.17"
   },
   "devDependencies": {
     "webpack": "^2.4.1"
