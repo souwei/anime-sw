@@ -24,19 +24,30 @@ xml2js = require('xml2js');
 var parser = new xml2js.Parser({explicitArray:false});
 
 app.get('/api/anime',function(req,res){
-  request(`https://${api_user}:${api_pwd}@myanimelist.net/api/anime/search.xml?q=${req.query['title']}`,function (error,
-  animeResponse,body){
-     if(body){
-       parser.parseString(body, function (err, result) {
-          result.anime.entry.forEach(function(entryData){
-            copyToLocalDB(entryData);
-          });
-          res.send(result.anime.entry);
-      });
-    } else {
-      res.send("Anime Not Found on MAL");
-    }
-  });
+  var searchWord = req.query['title'];
+  //how to handle callback data
+  // searchLocalDB(searchWord,function(err,result){
+  //   console.log(result);
+  // });
+
+  var x = searchLocalDB(searchWord);
+  console.log(x);
+
+  // request(`https://${api_user}:${api_pwd}@myanimelist.net/api/anime/search.xml?q=${req.query['title']}`,function (error,
+  // animeResponse,body){
+  //    if(body){
+  //      parser.parseString(body, function (err, result) {
+  //         result.anime.entry.forEach(function(entryData){
+  //           copyToLocalDB(entryData);
+  //         });
+  //         res.send(result.anime.entry);
+  //     });
+  //   } else {
+  //     res.send("Anime Not Found on MAL");
+  //   }
+  // });
+
+
 });
 
 app.get('/',function(req,res){
@@ -64,11 +75,11 @@ function searchLocalDB(animeTitle){
   .then(function(data) {
       if(data.length===0){
         console.log("nope_");
-        return "Found nothing in local DB";
+        return "sada";
 
       }else{
         console.log("yepe_");
-        return "Found Anime in Local DB";
+        return "dsadsa";
       }
   })
   .catch(function(error) {
