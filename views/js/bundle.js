@@ -20936,6 +20936,7 @@ var SearchBox = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (SearchBox.__proto__ || Object.getPrototypeOf(SearchBox)).call(this, props));
 
+    _this.handleChange = _this.handleChange.bind(_this);
     _this.state = {
       searchTerm: ''
     };
@@ -20943,9 +20944,34 @@ var SearchBox = function (_React$Component) {
   }
 
   _createClass(SearchBox, [{
+    key: 'search',
+    value: function search(keyword) {
+      fetch('/api/anime/?title=' + keyword).then(function (res) {
+        return res.json();
+      }).then(function (json) {
+        console.log(json);
+      });
+    }
+  }, {
+    key: 'handleChange',
+    value: function handleChange(event) {
+      console.log('changing');
+      this.setState({ searchTerm: event.target.value });
+    }
+  }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement('input', { type: 'text' });
+      var searchTerm = this.state.searchTerm;
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement('input', { type: 'text', onChange: this.handleChange }),
+        _react2.default.createElement(
+          'span',
+          null,
+          this.state.searchTerm
+        )
+      );
     }
   }]);
 
