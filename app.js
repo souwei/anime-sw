@@ -3,12 +3,7 @@ var request = require('request');
 var pgp = require('pg-promise')();
 var PS = require('pg-promise').PreparedStatement;
 var app = express();
-var engine = require('ejs-mate');
 var path = require('path');
-app.set('views',path.join(__dirname,'views'));
-app.engine('ejs',engine);
-app.set('view engine','ejs');
-
 
 var db = pgp({
   host: 'localhost',
@@ -18,7 +13,7 @@ var db = pgp({
   password: 'test'
 });
 
-
+app.use(express.static(path.join(__dirname, 'views')));
 
 var api_user = process.env.anime_user;
 var api_pwd = process.env.anime_pwd;
@@ -29,7 +24,6 @@ xml2js = require('xml2js');
 var parser = new xml2js.Parser({explicitArray:false});
 
 app.get('/api/anime',function(req,res){
-  //request('https://'+api_user+':'+api_pwd+'@myanimelist.net/api/anime/search.xml?q='+req.query['title']
   request(`https://${api_user}:${api_pwd}@myanimelist.net/api/anime/search.xml?q=${req.query['title']}`,function (error,
   animeResponse,body){
      if(body){
@@ -46,11 +40,7 @@ app.get('/api/anime',function(req,res){
 });
 
 app.get('/',function(req,res){
-  //var search_results = searchLocalDB(req.query['title']);
-  res.render('home');
-  //console.log(search_results);
-  //res.send(search_results);
-
+  res.sendFile('home');
 });
 
 function copyToLocalDB(anime){
