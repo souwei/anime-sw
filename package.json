@@ -12,7 +12,6 @@
   "author": "soulwong",
   "license": "ISC",
   "dependencies": {
-    "ejs-mate": "^2.3.0",
     "express": "^4.15.2",
     "pg-promise": "^5.6.7",
     "react": "^15.5.4",
